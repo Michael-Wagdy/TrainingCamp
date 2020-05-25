@@ -44,6 +44,9 @@
               <a class="nav-link" href="#">Contact</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="{{route('user.cart')}}">My Cart</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="user/logout">Logout</a>
             </li>
            <li class="nav-item">
@@ -181,7 +184,7 @@
         {
           e.preventDefault();
 
-          $('input[name="categories[]"][data-parent]').on('change', function (e) 
+          $('input[name="categories[]"][data-parent]').on('change', function () 
         {
           categories = [];
 
