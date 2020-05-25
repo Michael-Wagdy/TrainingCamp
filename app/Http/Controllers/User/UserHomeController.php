@@ -104,13 +104,14 @@ class UserHomeController extends Controller
     // get data from view through ajax function to get array of categories_id
     public function checkBoxCategory(Request $request)
     {   
+        // return response()->json($request->categories[1]);
         // check if the request came with array of categories_id or not
         if(!($request->categories))
         {   
             // array of categories_id is null so we will display all offers
             $offers = Offer::where('start_date','>',today())->get();
             return response()->json($offers); 
-        }
+        } 
 
         $categories = $request->categories;
         $offers = Offer::whereHas('categories', function ($query) use($categories) {$query->whereIn('category_id', $categories);})->get();

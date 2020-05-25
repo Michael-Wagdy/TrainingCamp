@@ -72,12 +72,12 @@
               @foreach($categories as $category)
               <ul style="list-style:none;">
                   <li>
-                      <label><input type="checkbox" name="categories[]" value="{{ $category->id }}" data-parent="{{$category->id}}" > {{$category->name}} </label>
+                  <label><input type="checkbox" name="categories[]" value="{{ $category->id }}" data-parent="{{$category->id}}" >{{$category->name}} </label>
                       @if(count($category->childs))
                           @foreach($category->childs as $child)
                       <ul style="list-style:none;">
                           <li>
-                            <label><input type="checkbox" name="categories[]" value="{{ $child->id }}" data-child="{{$category->id}}" > {{$child->name}} </label>
+                          <label> <input type="checkbox" name="categories[]" value="{{ $child->id }}" data-child="{{$category->id}}" > {{$child->name}} </label>
                           </li>
                       </ul>
                           @endforeach
@@ -126,10 +126,9 @@
 
           <div class="row" id="offer">
             @foreach($offers as $offer)
-            @foreach($offer->images as $image)
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="/uploads/images/{{ $image->imagename }}" alt=""></a>
+                <a href="#"><img class="card-img-top" src="" alt=""></a>
                 <div class="card-body">
                   <h4 class="card-title">
                     <a href="#">{{ $offer->name }}</a>
@@ -142,7 +141,6 @@
                 </div>
               </div>
             </div>
-            @endforeach
             @endforeach
           </div>
           {{$offers->links()}}
@@ -172,6 +170,7 @@
     <script>
       $(document).ready(function () 
       {
+
         $.ajaxSetup({
           headers: 
           {
@@ -180,27 +179,42 @@
         });
         var categories = [];
 
-        $('input[name="categories[]"]').on('change', function (e) 
-        {
-          e.preventDefault();
 
-          $('input[name="categories[]"][data-parent]').on('change', function () 
+        $('input[name="categories[]"][data-parent]').on('change', function () 
         {
-          categories = [];
 
           if($(this).data('parent') > 0 && $(this).prop('checked') == true){
             
             var parentid = $(this).data('parent');
-            $('input[name="categories[]"][data-child='+parentid+']').attr('checked','checked');
+            $('[data-child="'+parentid+'"]').prop("checked",true);
+            console.log(parentid);
 
-            // $('input[name="categories[]"][data-child]').attr('checked','checked');
+          }
+          if($(this).data('parent') > 0 && $(this).prop('checked') == false){
+            var parentid = $(this).data('parent');
+            $('[data-child="'+parentid+'"]').prop("checked",false);
+            console.log(parentid);}
+         
+          addData();
+          sendData(categories);});
 
-          }});
-          $('input[name="categories[]"]:checked').each(function()
-          {
-            categories.push($(this).val());
-          });
-          $.ajax({
+        $('input[name="categories[]"]').on('change', function () 
+        { addData();
+         sendData(categories);
+        });
+
+      function addData(){
+        categories = [];
+
+$('input[name="categories[]"]:checked').each(function()
+{
+  categories.push($(this).val());
+});
+      }
+
+      function sendData(categories){
+        console.log(categories);
+        $.ajax({
             type: "POST",
             dataType: "json",
             url: '{{ route('checkboxcategories') }}',
@@ -227,8 +241,9 @@
               console.log(data);
             }
           });
-        });
-      });
+      }
+    });
+
     </script>
 
   </body>
