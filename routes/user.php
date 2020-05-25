@@ -9,10 +9,10 @@ Route::get('/', function () {
 Auth::Routes();
 
 Route::namespace('User')->group(function(){
+    Route::get('home' , 'UserHomeController@index');
 
     Route::group(['middleware' => ['user_auth']], function () {
 
-        Route::get('home' , 'UserHomeController@index');
         Route::post('home' , 'UserHomeController@checkBoxCategory')->name('checkboxcategories');
     });
 

@@ -176,20 +176,23 @@
           }
         });
         var categories = [];
+
         $('input[name="categories[]"]').on('change', function (e) 
         {
-          if($('input[name="categories[]"][data-parent]').prop('checked') == true){
-            
-            var parentid = $('input[name="categories[]"][data-parent]').data('parent');
-            $('input[name="categories[]"][data-child]').each(function(){
-              
-              $('*[data-child=" + parentid + "]');
-            });
-            $('input[name="categories[]"][data-child]').attr('checked','checked');
-
-          }
           e.preventDefault();
+
+          $('input[name="categories[]"][data-parent]').on('change', function (e) 
+        {
           categories = [];
+
+          if($(this).data('parent') > 0 && $(this).prop('checked') == true){
+            
+            var parentid = $(this).data('parent');
+            $('input[name="categories[]"][data-child='+parentid+']').attr('checked','checked');
+
+            // $('input[name="categories[]"][data-child]').attr('checked','checked');
+
+          }});
           $('input[name="categories[]"]:checked').each(function()
           {
             categories.push($(this).val());
