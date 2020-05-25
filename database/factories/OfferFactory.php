@@ -1,7 +1,7 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-
+use Carbon\Carbon;
 use App\Offer;
 use App\OfferDetails;
 use App\Photo;
@@ -12,8 +12,8 @@ $factory->define(Offer::class, function (Faker $faker) {
         //
         "agency_id"=> 1,
         "name"=> $faker->name,
-        "start_date"=>$faker->dateTime($min="now"),
-        "end_date"=>$faker->dateTime($min="now"),
+        "start_date"=>Carbon::now()->addDays($faker->numberBetween(-5,100)),
+        "end_date"=>Carbon::now()->addDays($faker->numberBetween(5,120)),
         "rooms" => $faker->numberBetween(1,20),
         "status" => 1,
         "agency_price"=>$faker->randomNumber(3),
