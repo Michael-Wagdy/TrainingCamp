@@ -21,6 +21,15 @@ class OfferSeeder extends Seeder
             // Seed the relation with 5 photos
             $photos = factory(App\Photo::class, 5)->make();
             $offer->images()->saveMany($photos);
-        });
-    }
+
+            // Get all the categories attaching up to 3 random roles to each offer
+        $categories = App\Category::all();
+        $users = App\user::all();
+        // Populate the pivot table
+            $offer->categories()->attach($categories->random(rand(1, 3))->pluck('id')->toArray());
+            // $offer->users()->attach($users->random(rand(1, 3))->pluck('id')->toArray());
+            $offer->users()->attach($users->pluck('id')->toArray());
+        
+    });
+}
 }

@@ -25,5 +25,7 @@ class UserSeeder extends Seeder
             'avatar' => 'default.jpg',
             'password' => Hash::make('123456789'),
         ]);
+
+        // factory(App\User::class, 10)->create();
     }
 }
