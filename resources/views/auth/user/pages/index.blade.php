@@ -124,15 +124,25 @@
           
           <div id="search-results"></div>
 
+<<<<<<< HEAD
           <div class="row">
             @foreach($offers as $offer)
             <div class="col-lg-4 col-md-6 mb-4 " id="offer">
               <div class="card h-100">
                 <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+=======
+          <div class="row" id="offer">
+            @foreach($offers as $offer)
+            @foreach($offer->images as $image)
+            <div class="col-lg-4 col-md-6 mb-4">
+              <div class="card h-100">
+                <a href="#"><img class="card-img-top" src="/uploads/images/{{ $image->imagename }}" alt=""></a>
+>>>>>>> 3e850ea00a58fa276142ceab506c0aa2e09b23dc
                 <div class="card-body">
                   <h4 class="card-title">
                     <a href="#">{{ $offer->name }}</a>
                   </h4>
+<<<<<<< HEAD
                   <h5>{{$offer->user_price}}</h5>
                   <p class="card-text">{{ $offer->id }}</p>
                   @if(in_array($offer->toArray(),Auth::user()->offers->toArray()))
@@ -141,6 +151,10 @@
                   <button class="btn btn-success add" data-text-swap="Remove" value="{{ $offer->id }}">Add to Cart</button>
                   @endif
                   <!--<button class="btn btn-danger remove" style="display:none;">Remove from Cart</button> -->
+=======
+                  <h5>$24.99</h5>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+>>>>>>> 3e850ea00a58fa276142ceab506c0aa2e09b23dc
                 </div>
                 <div class="card-footer">
                   <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
@@ -148,6 +162,10 @@
               </div>
             </div>
             @endforeach
+<<<<<<< HEAD
+=======
+            @endforeach
+>>>>>>> 3e850ea00a58fa276142ceab506c0aa2e09b23dc
           </div>
           {{$offers->links()}}
           
@@ -176,14 +194,18 @@
     <script>
       $(document).ready(function () 
       {
+<<<<<<< HEAD
         
 
+=======
+>>>>>>> 3e850ea00a58fa276142ceab506c0aa2e09b23dc
         $.ajaxSetup({
           headers: 
           {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
         });
+<<<<<<< HEAD
 
           /*$("[id=offer]").each(function(){
 
@@ -257,6 +279,8 @@
 
           
 
+=======
+>>>>>>> 3e850ea00a58fa276142ceab506c0aa2e09b23dc
         var categories = [];
 
         $('input[name="categories[]"]').on('change', function (e) 

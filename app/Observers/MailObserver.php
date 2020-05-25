@@ -10,7 +10,11 @@ class MailObserver
 {   
     // Once the user is created he will recevie welcome mail message
         
+<<<<<<< HEAD
     /*public function created(User $user)
+=======
+    public function created(User $user)
+>>>>>>> 3e850ea00a58fa276142ceab506c0aa2e09b23dc
     {   
         if(!(request()->is("admin*")))
         
@@ -21,5 +25,9 @@ class MailObserver
         }
 
        
+<<<<<<< HEAD
     }*/
+=======
+    }
+>>>>>>> 3e850ea00a58fa276142ceab506c0aa2e09b23dc
 }
