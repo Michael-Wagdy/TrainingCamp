@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Offer extends Model
 {
 
+    protected $hidden = ['pivot'];
+    
     protected $fillable = [
         'agency_id','name', 'start_date', 'end_date', 'rooms', 'status', 'agency_price', 'user_price'
     ];
@@ -34,4 +36,6 @@ class Offer extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+
 }

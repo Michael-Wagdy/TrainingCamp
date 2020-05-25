@@ -72,12 +72,12 @@
               @foreach($categories as $category)
               <ul style="list-style:none;">
                   <li>
-                      <label><input type="checkbox" name="categories[]" value="{{ $category->id }}" data-parent="{{$category->id}}" > {{$category->name}} </label>
+                  <label><input type="checkbox" name="categories[]" value="{{ $category->id }}" data-parent="{{$category->id}}" >{{$category->name}} </label>
                       @if(count($category->childs))
                           @foreach($category->childs as $child)
                       <ul style="list-style:none;">
                           <li>
-                            <label><input type="checkbox" name="categories[]" value="{{ $child->id }}" data-child="{{$category->id}}" > {{$child->name}} </label>
+                          <label> <input type="checkbox" name="categories[]" value="{{ $child->id }}" data-child="{{$category->id}}" > {{$child->name}} </label>
                           </li>
                       </ul>
                           @endforeach
@@ -126,20 +126,26 @@
 
           <div class="row" id="offer">
             @foreach($offers as $offer)
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-lg-4 col-md-6 mb-4 " id="offer">
               <div class="card h-100">
-                @foreach($offer->images as $image)
-                @endforeach
-
-                <a href="#"><img class="card-img-top" src="{{ $image->imagename }}" alt=""></a>
-
+                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
                 <div class="card-body">
                   <h4 class="card-title">
                     <a href="#">{{ $offer->name }}</a>
                   </h4>
                   <h5>$24.99</h5>
-                  <button class="btn btn-primary"><a style="color:#FFF" href="details/{{ $offer->id }}">Details</a><br></button>
                   <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                  <h5>{{$offer->user_price}}</h5>
+                  <p class="card-text">{{ $offer->id }}</p>
+
+                  @auth
+                  @if(in_array($offer->toArray(),Auth::user()->offers->toArray()))
+                    <button class="btn btn-success add" data-text-swap="Remove" value="{{ $offer->id }}">Remove</button>
+                  @else
+                  <button class="btn btn-success add" data-text-swap="Remove" value="{{ $offer->id }}">Add to Cart</button>
+                  @endif
+                  @endauth
+                  <button class="btn btn-primary"><a style="color:#FFF" href="details/{{ $offer->id }}">Details</a><br></button>
                 </div>
                 <div class="card-footer">
                   <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
@@ -181,29 +187,83 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
         });
+        
+          var carts = [];
+          
+          $("button").on("click", function() {
+
+            var el = $(this);
+
+            if (el.text() == el.data("text-swap")) {
+
+              el.text(el.data("text-original"));
+
+              carts.pop($(this).val());
+              
+            }
+            else 
+            {
+                el.data("text-original", el.text());
+
+                el.text(el.data("text-swap"));
+
+                if(carts.length < 3)
+                {
+                  carts.push($(this).val());
+                }else
+                {
+                  alert("Keda kfaya 3lek el offers dol ya handsa !!");
+                }
+            }
+            $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '{{ route('usersoffers') }}',
+            data: {'carts': carts},
+            success:function(data) {
+              console.log("Done");
+            }
+          });
+          });
+
         var categories = [];
 
-        $('input[name="categories[]"]').on('change', function (e) 
-        {
-          e.preventDefault();
 
-          $('input[name="categories[]"][data-parent]').on('change', function () 
+        $('input[name="categories[]"][data-parent]').on('change', function () 
         {
-          categories = [];
 
           if($(this).data('parent') > 0 && $(this).prop('checked') == true){
             
             var parentid = $(this).data('parent');
-            $('input[name="categories[]"][data-child='+parentid+']').attr('checked','checked');
+            $('[data-child="'+parentid+'"]').prop("checked",true);
+            console.log(parentid);
 
-            // $('input[name="categories[]"][data-child]').attr('checked','checked');
+          }
+          if($(this).data('parent') > 0 && $(this).prop('checked') == false){
+            var parentid = $(this).data('parent');
+            $('[data-child="'+parentid+'"]').prop("checked",false);
+            console.log(parentid);}
+         
+          addData();
+          sendData(categories);});
 
-          }});
-          $('input[name="categories[]"]:checked').each(function()
-          {
-            categories.push($(this).val());
-          });
-          $.ajax({
+        $('input[name="categories[]"]').on('change', function () 
+        { addData();
+         sendData(categories);
+        });
+
+      function addData(){
+        categories = [];
+
+$('input[name="categories[]"]:checked').each(function()
+{
+  categories.push($(this).val());
+});
+      }
+
+      function sendData(categories){
+        console.log(categories);
+        $.ajax({
             type: "POST",
             dataType: "json",
             url: '{{ route('checkboxcategories') }}',
@@ -230,8 +290,9 @@
               console.log(data);
             }
           });
-        });
-      });
+      }
+    });
+
     </script>
 
   </body>
