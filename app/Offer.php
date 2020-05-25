@@ -11,10 +11,6 @@ class Offer extends Model
         'agency_id','name', 'start_date', 'end_date', 'rooms', 'status', 'agency_price', 'user_price'
     ];
 
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
     public function agency()
     {
         return $this->belongsTo(Agency::class);
