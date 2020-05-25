@@ -9,12 +9,21 @@ Route::get('/', function () {
 Auth::Routes();
 
 Route::namespace('User')->group(function(){
+<<<<<<< HEAD
+
+=======
+>>>>>>> 3e850ea00a58fa276142ceab506c0aa2e09b23dc
     Route::get('home' , 'UserHomeController@index');
     Route::get('cart' , 'CartController@index')->name('user.cart');
 
     Route::group(['middleware' => ['user_auth']], function () {
 
         Route::post('home' , 'UserHomeController@checkBoxCategory')->name('checkboxcategories');
+<<<<<<< HEAD
+
+        Route::post('cart' , 'CartController@store')->name('usersoffers');
+=======
+>>>>>>> 3e850ea00a58fa276142ceab506c0aa2e09b23dc
     });
 
     Route::group(['prefix' => 'user'],function(){

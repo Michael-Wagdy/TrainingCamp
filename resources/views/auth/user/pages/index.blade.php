@@ -124,17 +124,24 @@
           
           <div id="search-results"></div>
 
-          <div class="row" id="offer">
+          <div class="row">
             @foreach($offers as $offer)
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-lg-4 col-md-6 mb-4 " id="offer">
               <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="" alt=""></a>
+                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+>>>>>>> 8602bf1e823bb43d1f03cdf253a1f3b70dfc06f5
                 <div class="card-body">
                   <h4 class="card-title">
                     <a href="#">{{ $offer->name }}</a>
                   </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                  <h5>{{$offer->user_price}}</h5>
+                  <p class="card-text">{{ $offer->id }}</p>
+                  @if(in_array($offer->toArray(),Auth::user()->offers->toArray()))
+                    <button class="btn btn-success add" data-text-swap="Remove" value="{{ $offer->id }}">Remove</button>
+                  @else
+                  <button class="btn btn-success add" data-text-swap="Remove" value="{{ $offer->id }}">Add to Cart</button>
+                  @endif
+                  <!--<button class="btn btn-danger remove" style="display:none;">Remove from Cart</button> -->
                 </div>
                 <div class="card-footer">
                   <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
@@ -142,6 +149,13 @@
               </div>
             </div>
             @endforeach
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+            @endforeach
+>>>>>>> 3e850ea00a58fa276142ceab506c0aa2e09b23dc
+>>>>>>> 8602bf1e823bb43d1f03cdf253a1f3b70dfc06f5
           </div>
           {{$offers->links()}}
           
@@ -170,13 +184,53 @@
     <script>
       $(document).ready(function () 
       {
-
         $.ajaxSetup({
           headers: 
           {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
         });
+        
+          var carts = [];
+          
+          $("button").on("click", function() {
+
+            var el = $(this);
+
+            if (el.text() == el.data("text-swap")) {
+
+              el.text(el.data("text-original"));
+
+              carts.pop($(this).val());
+              
+            }
+            else 
+            {
+                el.data("text-original", el.text());
+
+                el.text(el.data("text-swap"));
+
+                if(carts.length < 3)
+                {
+                  carts.push($(this).val());
+                }else
+                {
+                  alert("Keda kfaya 3lek el offers dol ya handsa !!");
+                }
+            }
+            $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '{{ route('usersoffers') }}',
+            data: {'carts': carts},
+            success:function(data) {
+              console.log("Done");
+            }
+          });
+          });
+
+=======
+>>>>>>> 3e850ea00a58fa276142ceab506c0aa2e09b23dc
         var categories = [];
 
 
