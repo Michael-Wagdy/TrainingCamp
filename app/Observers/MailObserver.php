@@ -10,16 +10,16 @@ class MailObserver
 {   
     // Once the user is created he will recevie welcome mail message
         
-    public function created(User $user)
-    {   
-        if(!(request()->is("admin*")))
+    // public function created(User $user)
+    // {   
+    //     if(!(request()->is("admin*")))
         
-        {
-            $user_email = $user->email;
+    //     {
+    //         $user_email = $user->email;
         
-            Mail::to($user_email)->send(new WelcomeEmail($user));
-        }
+    //         Mail::to($user_email)->send(new WelcomeEmail($user));
+    //     }
 
        
-    }
+    // }
 }

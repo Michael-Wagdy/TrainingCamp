@@ -38,7 +38,7 @@ $factory->define(OfferDetails::class, function (Faker $faker) {
     $factory->define(Photo::class, function (Faker $faker) {
         return [
             //
-             "imagename"=>$faker->imageUrl($width = 640, $height = 480)
+             "imagename"=>$faker->imageUrl($width = 200, $height = 200)
         ];
 });
  

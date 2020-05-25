@@ -10,6 +10,7 @@ Auth::Routes();
 
 Route::namespace('User')->group(function(){
     Route::get('home' , 'UserHomeController@index');
+    Route::get('details/{offerId}' , 'UserHomeController@showOfferDetails');
     Route::get('cart' , 'CartController@index')->name('user.cart');
 
     Route::group(['middleware' => ['user_auth']], function () {

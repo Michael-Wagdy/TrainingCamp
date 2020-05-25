@@ -29,6 +29,14 @@ class UserHomeController extends Controller
         return view('auth.user.pages.profile', compact('auth_user'));
     }
     
+
+    public function showOfferDetails($offerId)
+    {
+        $offer = Offer::findOrFail($offerId);
+        return view('auth.user.pages.offer-details', compact('offer'));
+    }
+
+
     public function edit($userId)
     {
         $user = User::findOrFail($userId); //primary Key
