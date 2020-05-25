@@ -124,12 +124,11 @@
           
           <div id="search-results"></div>
 
-          <div class="row">
+          <div class="row" id="offer">
             @foreach($offers as $offer)
             <div class="col-lg-4 col-md-6 mb-4 " id="offer">
               <div class="card h-100">
                 <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
->>>>>>> 8602bf1e823bb43d1f03cdf253a1f3b70dfc06f5
                 <div class="card-body">
                   <h4 class="card-title">
                     <a href="#">{{ $offer->name }}</a>
@@ -149,13 +148,6 @@
               </div>
             </div>
             @endforeach
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-            @endforeach
->>>>>>> 3e850ea00a58fa276142ceab506c0aa2e09b23dc
->>>>>>> 8602bf1e823bb43d1f03cdf253a1f3b70dfc06f5
           </div>
           {{$offers->links()}}
           
@@ -229,8 +221,6 @@
           });
           });
 
-=======
->>>>>>> 3e850ea00a58fa276142ceab506c0aa2e09b23dc
         var categories = [];
 
 
